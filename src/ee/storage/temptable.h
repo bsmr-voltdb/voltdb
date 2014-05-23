@@ -269,7 +269,9 @@ inline void TempTable::freeLastScanedBlock(std::vector<TBPtr>::iterator nextBloc
     assert(nextBlockIterator-1 < m_data.end());
 
     if (nextBlockIterator-1 >= m_data.begin()) {
-        m_data.at(nextBlockIterator-1) = NULL;
+        std::vector<TBPtr>::iterator lastItr = nextBlockIterator--;
+        *lastItr = NULL;
+
         if (m_limits) {
             m_limits->reduceAllocated(m_tableAllocationSize);
         }
